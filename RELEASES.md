@@ -1,3 +1,43 @@
+# Release rayon 1.8.1 / rayon-core 1.12.1 (2024-01-17)
+
+- The new `"web_spin_lock"` crate feature makes mutexes spin on the main
+  browser thread in WebAssembly, rather than suffer an error about forbidden
+  `atomics.wait` if they were to block in that context. Thanks @RReverser!
+
+# Release rayon 1.8.0 / rayon-core 1.12.0 (2023-09-20)
+
+- The minimum supported `rustc` is now 1.63.
+- Added `ThreadPoolBuilder::use_current_thread` to use the builder thread as
+  part of the new thread pool. That thread does not run the pool's main loop,
+  but it may participate in work-stealing if it yields to rayon in some way.
+- Implemented `FromParallelIterator<T>` for `Box<[T]>`, `Rc<[T]>`, and
+  `Arc<[T]>`, as well as `FromParallelIterator<Box<str>>` and
+  `ParallelExtend<Box<str>>` for `String`.
+- `ThreadPoolBuilder::build_scoped` now uses `std::thread::scope`.
+- The default number of threads is now determined using
+  `std::thread::available_parallelism` instead of the `num_cpus` crate.
+- The internal logging facility has been removed, reducing bloat for all users.
+- Many smaller performance tweaks and documentation updates.
+
+# Release rayon 1.7.0 / rayon-core 1.11.0 (2023-03-03)
+
+- The minimum supported `rustc` is now 1.59.
+- Added a fallback when threading is unsupported.
+- The new `ParallelIterator::take_any` and `skip_any` methods work like
+  unordered `IndexedParallelIterator::take` and `skip`, counting items in
+  whatever order they are visited in parallel.
+- The new `ParallelIterator::take_any_while` and `skip_any_while` methods work
+  like unordered `Iterator::take_while` and `skip_while`, which previously had
+  no parallel equivalent. The "while" condition may be satisfied from anywhere
+  in the parallel iterator, affecting all future items regardless of position.
+- The new `yield_now` and `yield_local` functions will cooperatively yield
+  execution to Rayon, either trying to execute pending work from the entire
+  pool or from just the local deques of the current thread, respectively.
+
+# Release rayon-core 1.10.2 (2023-01-22)
+
+- Fixed miri-reported UB for SharedReadOnly tags protected by a call.
+
 # Release rayon 1.6.1 (2022-12-09)
 
 - Simplified `par_bridge` to only pull one item at a time from the iterator,

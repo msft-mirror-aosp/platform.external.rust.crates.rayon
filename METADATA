@@ -1,23 +1,20 @@
 # This project was upgraded with external_updater.
-# Usage: tools/external_updater/updater.sh update rust/crates/rayon
-# For more info, check https://cs.android.com/android/platform/superproject/+/master:tools/external_updater/README.md
+# Usage: tools/external_updater/updater.sh update external/rust/crates/rayon
+# For more info, check https://cs.android.com/android/platform/superproject/+/main:tools/external_updater/README.md
 
 name: "rayon"
 description: "Simple work-stealing parallelism for Rust"
 third_party {
-  url {
-    type: HOMEPAGE
-    value: "https://crates.io/crates/rayon"
-  }
-  url {
-    type: ARCHIVE
-    value: "https://static.crates.io/crates/rayon/rayon-1.6.1.crate"
-  }
-  version: "1.6.1"
   license_type: NOTICE
   last_upgrade_date {
-    year: 2022
-    month: 12
-    day: 13
+    year: 2024
+    month: 2
+    day: 6
+  }
+  homepage: "https://crates.io/crates/rayon"
+  identifier {
+    type: "Archive"
+    value: "https://static.crates.io/crates/rayon/rayon-1.8.1.crate"
+    version: "1.8.1"
   }
 }
